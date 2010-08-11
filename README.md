@@ -18,7 +18,7 @@ To create a new Class from scratch, we can use both the default Class constructi
        ,power : 1
     });
 
-To extends a Class (this can be done with any Class):
+To extend a Class (this can be done with any Class):
 
     #JS
     new Class.def('Ninja') << new Person({
@@ -31,6 +31,11 @@ To extends a Class (this can be done with any Class):
 *NOTE: It is very important that you use the `new` operator on both, or the execution order will get break*
 
 This should work on any instance of Class, no matter how it was defiened.
+
+## Limitations:
+  1. You must make sure you use the new operator for both the `Class.def` and the inherited Class.
+  2. If you use the `Class.def` syntax to create base Calses, make sure you pass them arguments, even if it's an empty literal. Failing to do so will result in funky behaviors. 
+  3. I have obviosly not tested this too much, so use with caution.
 
  
 
