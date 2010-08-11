@@ -42,8 +42,6 @@ THE SOFTWARE
     /* Monkey Patching */
     Class = function(params){ 
         var init = false
-            , t_valueOf = null
-            , $this = this
             , F; 
         
         params = params || {};
@@ -59,12 +57,13 @@ THE SOFTWARE
             
             if (class_name){ // if Class.def is being used
                 
-                temp_args = {Extends:F}
-                
+                temp_args = {Extends:F};
                 $extend(temp_args,args[0] || {}); //this is so the Extend comes before the rest of the parameters
-                console.log(args[0],class_name);
+
                 window[class_name] = new Class(temp_args);
+
                 class_name = false;  
+
                 return window[class_name];
             }           
             
@@ -79,7 +78,8 @@ THE SOFTWARE
     
    Class.def = function(name,args){
         if (args){ //if args are present simply create a new Class
-            return window[name] = new Class(args);
+            window[name] = new Class(args);
+            return window[name];
         }
         //assume using << syntax
         class_name = name; //store the Class name for the initializer to construct a new Class
