@@ -1214,9 +1214,9 @@ new Native({name: 'Class', initialize: Class}).extend({
 Class.implement({
 	
 	implement: function(key, value){
-		
+		        
 		if ($type(key) == 'object'){
-			for (var p in key) this.implement(p, key[p]);
+            for (var p in key) this.implement(p, key[p]);
 			return this;
 		}
 		

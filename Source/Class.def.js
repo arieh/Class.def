@@ -35,8 +35,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE 
 */
-(function(window,$,undef){
-    var old = Class, temp_args, temp, defing = false;
+(function(window,undef){
+    var old = Class, temp, defing = false;
     
     Class = function(params){
         var init = false, t_valueOf = null, F, $this = this;
@@ -49,7 +49,7 @@ THE SOFTWARE
             var args = arguments, t_args;
             if (defing){
                 t_args = {Extends:F}
-                $extend(t_args,args[0] || {});
+                Object.extend(t_args,args[0] || {});
                 window[temp] = new Class(t_args);
                 defing = false;  
                 return;
@@ -70,11 +70,5 @@ THE SOFTWARE
         }
         defing = true;
         temp = name;
-   }
-    
-   var a = new Class({
-        initialize : function(a){console.log(this.abc());}
-        , abc : function(){return 'abc'}
-   });
-   
-})(this,document.id);
+   };
+})(this);
