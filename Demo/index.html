@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+    <ul id='res'></ul>
+	<script type='text/javascript' src='core.js'></script>
+    <script type="text/javascript" src="../Source/Class.def.js"></script>
+    <script type="text/javascript">
+        new Class.def('Person',{
+            age : 20
+            ,name : ''
+            , el : null
+            , initialize : function(name,age){
+                this.name = name;
+                this.el = $('res');
+                if (age) this.age = age;
+                this.log();
+                
+            }
+            , log:function(){
+                new Element('li',{
+                    html:'My Name Is '+this.name+' and my age is '+this.age
+                }).inject(this.el);
+            }
+        });
+       
+       
+       new Class.def('Child') << new Person({
+            age : 5
+       });
+       
+       new Class.def('Elder') << new Person({
+            age:70
+       });
+       
+       var bob = new Person('Bob',25);
+       var keef = new Child('Keef');
+       var alice = new Elder('Alice');
+    </script>
+</body>
+</html>
