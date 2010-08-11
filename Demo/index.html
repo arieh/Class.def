@@ -30,10 +30,18 @@
        
        new Class.def('Child') << new Person({
             age : 5
+           , initialize:function(name,age){
+               if (age>15) throw "Child cannot be older than 15";
+               this.parent(name,age);
+           }
        });
        
        new Class.def('Elder') << new Person({
             age:70
+           , initialize:function(name,age){
+               if (age<60) throw "Elders cannot be younger than 60";
+               this.parent(name,age);
+           }
        });
        
        var bob = new Person('Bob',25);
