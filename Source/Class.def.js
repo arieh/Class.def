@@ -89,7 +89,8 @@ THE SOFTWARE
     
     Class
     
-   Class.def = function(name){
+   Class.def = function(name, args){
+        if (args) throw new Error("Old syntax not working anymore. Try Doing new Class.def('name') << new Class(args)");
         class_name = name; //store the Class name for the initializer to construct a new Class
    };
    
