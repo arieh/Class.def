@@ -37,11 +37,13 @@ THE SOFTWARE
 */
 (function(window,undef){
     var oClass = Class //used for monkey patching the Class constructor
-        , class_name = false; //contain the class to be created with Class.def
+        , class_name = false //contain the class to be created with Class.def
+        , temp_class;
     
     /* Monkey Patching */
     Class = function(params){ 
         var init = false
+            , temp_valueOf
             , F; 
         
         params = params || {};
@@ -49,39 +51,45 @@ THE SOFTWARE
         if (params.initialize){
             init = params.initialize;
         }
-       
+        if (params.valueOf) temp_valueOf = params.valueOf;
        
        params.initialize = function(){ //this is where the magic happens
             var args = arguments
                 , temp_args;
-            
-            if (class_name){ // if Class.def is being used
-                
-                temp_args = {Extends:F};
-                $extend(temp_args,args[0] || {}); //this is so the Extend comes before the rest of the parameters
 
-                window[class_name] = new Class(temp_args);
+                if (class_name){ // if Class.def is being used
+                return {                
+                    valueOf : function(){
+                        var cls;
+                        temp_args = {Extends:F};
+                        $extend(temp_args,args[0] || {}); //this is so the Extend comes before the rest of the parameters
 
-                class_name = false;  
-
-                return window[class_name];
+                        cls = window[class_name] = new Class(temp_args);
+                        class_name = null;
+                        return cls;
+                    }                
+                };           
+            }else{ // normal Class instantiation
+                if (init) init.apply(this,args); //call original initializer OR
+                else if (this.parent) this.parent.apply(this,args); //call parent initializer 
             }           
-            
-            if (init) init.apply(this,args); //call original initializer OR
-            else if (this.parent) this.parent.apply(this,args); //call parent initializer 
         };
         
-        F= new oClass(params);
+        temp_class = F= new oClass(params);
+        
+        F.valueOf = function(){ //used when base Classes are created
+            if (class_name && temp_class){
+                window[class_name] = temp_class; 
+                temp_class = null;
+                class_name = null;
+            }else if (temp_valueOf) return temp_valueOf().bind(F); 
+        }
         return F;
     }.extend(oClass);
     
+    Class
     
-   Class.def = function(name,args){
-        if (args){ //if args are present simply create a new Class
-            window[name] = new Class(args);
-            return window[name];
-        }
-        //assume using << syntax
+   Class.def = function(name){
         class_name = name; //store the Class name for the initializer to construct a new Class
    };
    

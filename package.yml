@@ -1,7 +1,7 @@
 name:  Class.def
 author:  arieh
-current:  1.0.2
+current:  1.1
 category: Utilities  
 tags:  [Class,Ruby]
-demo:  http://jsfiddle.net/LnStF/2/
-#docs: http://blog.arieh.co.il/posts/open/31
+demo:  http://jsfiddle.net/LnStF/5/
+docs: http://blog.arieh.co.il/posts/open/intorduction-to-classdef

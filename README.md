@@ -10,7 +10,7 @@ This is an extendtion to Class that allows extending Classes in a ruby like synt
 To create a new Class from scratch, we can use both the default Class construction method, or like this:
 
     #JS
-    new Class.def("Preson",{
+    new Class.def("Preson") << new Class({
         initialize : function(name){
             this.name = name;
             console.log('My Name Is '+name+' And I Am '+this.power+' strong!');
@@ -34,9 +34,12 @@ This should work on any instance of Class, no matter how it was defiened.
 
 ## Limitations:
   1. You must make sure you use the new operator for both the `Class.def` and the inherited Class.
-  2. If you use the `Class.def` syntax to create base Calses, make sure you pass them arguments, even if it's an empty literal. Failing to do so will result in funky behaviors. 
+  2. Make sure you never call Class.def without using the full syntax (`<< new Class`). Doing so might make the following Class instantiation fail.
   3. I have obviosly not tested this too much, so use with caution.
 
+## Notes On version 1.1
+  1. You can now only create Classes using the << operator (well, actually, any numeric operator will do). 
+  2. You can no longer create Classes via passing a second argument. This is to make sure the syntax is used correctly.
  
 
     
